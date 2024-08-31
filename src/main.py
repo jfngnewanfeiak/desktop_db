@@ -15,12 +15,15 @@ print("connected DB!!!")
 
 def callback(msg):
     msg = msg.split("/")
-    DB.exec_update(f"insert into sensor_tb values({msg[0]},{msg[1]})")
+    DB.exec_update(f"insert into sensor_tb values({msg[1]},{msg[0]})")
 
 if __name__ == "__main__":
 
     # MQTT 設定
     sub = MQTT_SUB()
-    sub.sub_run(broker_ip='broker.emqx.io',topic_name='desktop_mqtt',cb=callback)
-    while True:
-        pass
+    sub.sub_run(broker_ip='broker.emqx.io',topic_name='topic/AM2320',cb=callback)
+    try:
+        while True:
+            pass
+    except KeyboardInterrupt as KI:
+        print(KI)
